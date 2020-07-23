@@ -8,7 +8,7 @@ export default function Navigation() {
         <Navbar.Brand href="#home">Administrator-Psikotest</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="m-auto">
+            <Nav className="ml-auto">
                 <Nav.Link href="/">Home</Nav.Link>
                 <Nav.Link href="/bank-soal">Bank Soal</Nav.Link>
             </Nav>
