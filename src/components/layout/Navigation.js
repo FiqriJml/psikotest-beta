@@ -10,6 +10,7 @@ export default function Navigation() {
         <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ml-auto">
                 <Nav.Link href="/">Home</Nav.Link>
+                <Nav.Link href="/tests">Tests</Nav.Link>
                 <Nav.Link href="/bank-soal">Bank Soal</Nav.Link>
             </Nav>
         </Navbar.Collapse>
