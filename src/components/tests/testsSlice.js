@@ -121,6 +121,11 @@ export default testsSlice.reducer
 
 export const selectAllTests = state => state.firestore.ordered.tests
 export const selectAllPaket = state => state.firestore.ordered.subpaket
+export const selectPaketById = (state, paketId) => {
+  const pakets = state.firestore.ordered.subpaket
+  if(!pakets) return
+  return pakets.find(paket => paket.id === paketId)
+} 
 export const selectTestById = (state, testId) => {
   const tests = state.firestore.ordered.tests
   if(!tests) return

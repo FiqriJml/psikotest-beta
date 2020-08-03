@@ -26,8 +26,6 @@ export const SingleTest = ({match}) =>{
     }
     const onDelete = (e) => {
         const paketId = e.target.id
-        console.log(paketId)
-        console.log(testId)
         dispatch(deletePaket({test, paketId}))
     }
     const hitungJumlah = (jml) => {
