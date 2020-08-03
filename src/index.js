@@ -6,12 +6,31 @@ import { BrowserRouter } from 'react-router-dom';
 import store from './app/store';
 import { Provider } from 'react-redux';
 
+import firebase from './fbConfig'
+import { createFirestoreInstance } from 'redux-firestore';
+import { ReactReduxFirebaseProvider } from 'react-redux-firebase';
+
+// react-redux-firebase config
+const rrfConfig = {
+  userProfile: 'users'
+  // useFirestoreForProfile: true // Firestore for Profile instead of Realtime DB
+}
+
+const rrfProps = {
+  firebase,
+  config: rrfConfig,
+  dispatch: store.dispatch,
+  createFirestoreInstance // <- needed if using firestore
+}
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <ReactReduxFirebaseProvider {...rrfProps}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </ReactReduxFirebaseProvider>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')

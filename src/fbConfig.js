@@ -3,7 +3,7 @@ import 'firebase/firestore'
 import 'firebase/storage'
 import 'firebase/auth'
 
-var firebaseConfig = {
+export var firebaseConfig = {
     apiKey: "AIzaSyAQGjc9dVN7dNKj_-FoY10YtRlrcBEDy8U",
     authDomain: "psikotest-rumah-hijau.firebaseapp.com",
     databaseURL: "https://psikotest-rumah-hijau.firebaseio.com",
@@ -16,6 +16,6 @@ var firebaseConfig = {
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-firebase.analytics();
+// firebase.analytics();
 
 export default firebase;
