@@ -1,11 +1,10 @@
 import React, {useState} from 'react'
 import { useDispatch } from 'react-redux'
-import { unwrapResult } from '@reduxjs/toolkit'
 import { addNewTest } from './testsSlice'
 
 export default function AddTestForm() {
     const [name, setName] = useState('')
-    const [addRequestStatus, setAddRequestStatus] = useState('idle')
+    const [addRequestStatus] = useState('idle')
     
     const dispatch = useDispatch()
     const onNameChanged = (e) => setName(e.target.value)

@@ -1,14 +1,14 @@
 import React from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {selectTestById, addPaket, selectAllPaket, deletePaket} from '../testsSlice'
+import {selectTestById, selectAllPaket, deletePaket} from '../testsSlice'
 import { isLoaded, useFirestoreConnect, isEmpty } from 'react-redux-firebase'
 
 export const SingleTest = ({match}) =>{
     const {testId} = match.params
     // fungsinya untuk otomatis konek dengan firestore, setiap ada peruban akan respon
     useFirestoreConnect([
-        {collection: 'tests', doc: testId, subcollections: [{collection: 'paket'}],  storeAs: "subpaket"},
+        {collection: 'tests', doc: testId, subcollections: [{collection: 'paket'}],  storeAs: "subpaket", orderBy: "no"},
         {collection: 'tests', }
     ]);
     
@@ -24,14 +24,25 @@ export const SingleTest = ({match}) =>{
             </div>
         )
     }
-    const addingPaket = () => {
-        dispatch(addPaket(test))
-    }
     const onDelete = (e) => {
         const paketId = e.target.id
         console.log(paketId)
         console.log(testId)
-        dispatch(deletePaket({testId, paketId}))
+        dispatch(deletePaket({test, paketId}))
+    }
+    const hitungJumlah = (jml) => {
+        // jml = 30
+        if(!jml) jml = "(empty)"
+        else{
+            jml = `${jml} butir`
+        }
+        return jml
+    }
+    const hitungWaktu = (waktu) => {
+        // waktu = 35
+        if(!waktu) waktu = "(empty)"
+        else waktu = `${waktu} menit`
+        return waktu
     }
     let content = <tr></tr>
     if(isEmpty(pakets)){
@@ -44,11 +55,15 @@ export const SingleTest = ({match}) =>{
         content = pakets.map(paket => (
             <tr key={paket.id}>
                 <td>{++no}</td>
-                <td>{`paket ${no}`}</td>
+                <td>{paket.no}</td>
+                <td>{paket.tipe_soal}</td>
+                <td>{paket.bentuk_soal}</td>
+                <td>{hitungJumlah(paket.jml_soal)}</td>
+                <td>{hitungWaktu(paket.waktu_pengerjaan)}</td>
                 <td width="100px">
                     <div className="btn-group" role="group">
-                        <Link to={`${testId}/paket${no}`} className="btn btn-sm btn-primary">view</Link>
-                        <button className="btn btn-danger btn-sm" onClick={onDelete} id={`paket${no}`}>del</button>
+                        <Link to={`${testId}/${paket.id}`} className="btn btn-sm btn-primary">view</Link>
+                        <button className="btn btn-danger btn-sm" onClick={onDelete} id={paket.id}>del</button>
                     </div>
                 </td>
             </tr>
@@ -57,12 +72,17 @@ export const SingleTest = ({match}) =>{
     return (
         <div>
             <h2>{test.name}</h2>
-            <button onClick={addingPaket} className="btn btn-secondary btn-sm">Add Paket Soal</button> <br/> <br/>
+            {/* <button onClick={addingPaket} className="btn btn-secondary btn-sm">Add Paket Soal</button> <br/> <br/> */}
+            <Link to={`/${testId}/paket/add`} className="btn btn-secondary btn-sm">Add Paket</Link> <br/> <br/>
             <table className="table table-bordered">
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>sub paket</th>
+                        <th>paket</th>
+                        <th>Tipe Soal</th>
+                        <th>Bentuk Soal</th>
+                        <th>Jumlah Soal</th>
+                        <th>Waktu Pengerjaan</th>
                         <th>Action</th>
                     </tr>
                 </thead>

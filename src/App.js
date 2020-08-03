@@ -7,6 +7,7 @@ import Navigation from './components/layout/Navigation';
 import SubList from './components/tests/subsoal/SubList';
 import EditTestForm from './components/tests/EditTestForm';
 import AddSubForm from './components/tests/subsoal/AddForm';
+import SoalList from './components/tests/soal/SoalList';
 
 function App() {
   return (
@@ -17,8 +18,9 @@ function App() {
           <Route path="/bank-soal" component={BankSoal}/>
           <Route exact path="/tests" component={Tests}/>
           <Route exact path="/tests/:testId" component={SubList} />
+          <Route exact path="/tests/:testId/:paketId" component={SoalList} />
           <Route path="/tests/edit/:testId" component={EditTestForm} />
-          <Route path="/subsoal/add" component={AddSubForm} />
+          <Route path="/:testId/paket/add" component={AddSubForm} />
       </div>
     </div>
   );

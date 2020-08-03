@@ -49,42 +49,50 @@ export const addNewTest = createAsyncThunk(
   }
 )
 export const addPaket = createAsyncThunk(
-  'tests/paket/added', async (test) => {
-    let jmlPaket = 1
-    if(test.paket){
-      jmlPaket = test.paket + 1
-    }
-    const mPaket = "paket"+jmlPaket
-    const newTest = {
-      paket: jmlPaket,
-    }
-    const response = await dbTests.doc(test.id).update(newTest)
+  'tests/paket/added', async (paket) => {
+    const {test, ...newPaket} = paket
+    newPaket.no = parseInt(newPaket.no)
+    console.log('test:',test)
+    console.log('newPaket:',newPaket)
+    const dbPaket = dbTests.doc(test.id).collection('paket')
+
+    const response = await dbPaket.add(newPaket)
     .then( () => {
-      console.log("updating document succsess")
-      addPaketCollection(test.id, mPaket)
-      return test
+      console.log("updating doc paket succsess")
+      paketCounter(test, true) 
     }).catch(err =>{
       console.log("Error updating document: ", err)
     })
     return response
   }
 )
+const paketCounter = (test, add) => {
+  let jmlPaket = 1
+  if(!test.paket){
+    jmlPaket = 1
+  }
+  else if(add){
+    jmlPaket = test.paket + 1
+  }else{
+    jmlPaket = test.paket - 1
+  }
+  const newTest = {
+    paket: jmlPaket,
+  }
+  dbTests.doc(test.id).update(newTest).then(()=> console.log("success"))
+  .catch(err=> console.log("error:",err))
+}
 export const deletePaket = createAsyncThunk(
   'tests/paket/deleted', async (paket) => {
-    const {paketId, testId} = paket
-    const response = await dbTests.doc(testId).collection('paket').doc(paketId).delete()
-      .then(()=> console.log("success")).catch((err)=> console.log("Error deleting paket doc: ", err))
+    const {paketId, test} = paket
+    const response = await dbTests.doc(test.id).collection('paket').doc(paketId).delete()
+      .then(()=> {
+        console.log("success")
+        paketCounter(test, false)
+      }).catch((err)=> console.log("Error deleting paket doc: ", err))
     return response
   }
 )
-const addPaketCollection = (docId, paket) => {
-  dbTests.doc(docId).collection('paket').doc(paket).set({
-    name: paket
-  }).then(()=> console.log("updating document paket succsess"))
-  .catch(err=> {
-    console.log("error updating document paket: ",err)
-  });
-}
 
 export const testsSlice = createSlice({
     name: "tests",
