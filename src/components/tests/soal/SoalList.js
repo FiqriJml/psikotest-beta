@@ -29,8 +29,8 @@ function SoalList({match}) {
                 <li>Waktu: {paket.waktu}</li>
             </ul>
             <div className="btn-group" role="group">
-                <Link to="#" className="btn btn-sm btn-primary">Buat contoh soal</Link>
-                <Link to="#" className="btn btn-sm btn-success">Buat soal</Link>
+                <Link to={`${paketId}/add-soal/contoh`} className="btn btn-sm btn-primary">Buat contoh soal</Link>
+                <Link to={`${paketId}/add-soal`} className="btn btn-sm btn-success">Buat soal</Link>
             </div>
             <br/>   <br/>
             <p><b>Contoh Soal:</b></p>
