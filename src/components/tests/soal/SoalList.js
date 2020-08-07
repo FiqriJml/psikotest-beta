@@ -1,16 +1,19 @@
 import React from 'react'
 import { useSelector } from 'react-redux';
-import { selectPaketById } from '../testsSlice';
+import { selectPaketById, selectTestById } from '../testsSlice';
 import { useFirestoreConnect, isLoaded, isEmpty } from 'react-redux-firebase';
+import { Link } from 'react-router-dom';
 
 function SoalList({match}) {
     const {testId, paketId} = match.params
 
     useFirestoreConnect([
+        {collection: 'tests', doc: testId},
         {collection: 'tests', doc: testId, subcollections: [{collection: 'paket'}],  storeAs: "subpaket", orderBy: "no"},
     ]);
     const paket = useSelector(state => selectPaketById(state, paketId))
-    console.log(paket)
+    const test = useSelector(state => selectTestById(state, testId))
+   
     if(!isLoaded(paket)){
         return <p>Loading...</p>
     }
@@ -19,8 +22,18 @@ function SoalList({match}) {
     }
     return (
         <div>
-            <h3>Soal Sub Paket {paket.no}</h3>
-            <p>Contoh bla bla bla</p>
+            <h3>{test.name} Sub Paket {paket.no}</h3>
+            <ul>
+                <li>Bentuk: {paket.bentuk_soal}</li>
+                <li>Tipe: {paket.tipe_soal}</li>
+                <li>Waktu: {paket.waktu}</li>
+            </ul>
+            <div className="btn-group" role="group">
+                <Link to="#" className="btn btn-sm btn-primary">Buat contoh soal</Link>
+                <Link to="#" className="btn btn-sm btn-success">Buat soal</Link>
+            </div>
+            <br/>   <br/>
+            <p><b>Contoh Soal:</b></p>
         </div>
     )
 }
