@@ -1,4 +1,19 @@
 .opsi-benar{
-  color: aquamarine;
+  color: rgb(28, 137, 187);
   font-weight: bold;
+}
+.soal-box{
+    border: solid 1.2px rgb(1, 162, 226);
+    padding: 12px 20px;
+    padding-bottom: 24px;
+}
+.soal-item{
+  border-bottom: solid 1.2px rgb(194, 194, 194);
+  padding: 12px 0;
+}
+.soal-item:last-child{
+  border: none;
+}
+.opsi-box{
+  margin-left: 18px;
 }

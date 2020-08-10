@@ -7,10 +7,7 @@ function SoalViewer({soalList}) {
     console.log(soalList)
     let index = 0
     return (
-        <div style={{
-            border: "solid 2px red",
-            padding: "20px"
-        }}>
+        <div className="soal-box">
             {
                 soalList && soalList.map(soal => {
                     return (
