@@ -2,6 +2,7 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 import { addSoal, addContohSoal } from './soalAction'
 import { useState } from 'react'
+import { useHistory } from 'react-router-dom'
 
 function AddSoalForm({match}) {
     const {contoh, paketId, testId} = match.params
@@ -24,29 +25,50 @@ function AddSoalForm({match}) {
     myFun['kunci_jawaban'] = setkunci_jawaban;
 
     const dispatch = useDispatch()
+    
+    const history = useHistory()
 
     const onEnter = (e) => {
-        // console.log('awl: ',e.target.scrollHeight)
+        // enter textarea auto resize
         e.target.style.height = "auto"
-        // console.log('end: ',e.target.scrollHeight)
         const height = e.target.scrollHeight + 2
         e.target.style.height = height + 'px'
     }
     
     const onSubmit = (e) => {
         e.preventDefault()
-        const newSoal = {soal, pilihanA, pilihanB, pilihanC, pilihanD, pilihanE}
+        let newSoal = {}
         if(contoh){
+            newSoal = {soal, pilihanA, pilihanB, pilihanC, pilihanD, pilihanE}
             dispatch(addContohSoal({paketId, testId, newSoal}))
         }else{
+            newSoal = {soal, pilihanA, pilihanB, pilihanC, pilihanD, pilihanE, kunci_jawaban}
             dispatch(addSoal({paketId, testId, newSoal}))
         }
+        history.push(`/tests/${testId}/${paketId}`)
     }
     const onChange = e => {
         onEnter(e)
         const el = e.target
         myFun[el.id](el.value)
     }
+    let opsiKunciJawaban = <>
+    <label htmlFor="kunci_jawaban" className="col-sm-2 col-lg-1 col-form-label">Jawaban</label>
+    <div className="col-sm-10 col-lg-5">
+        <select value={kunci_jawaban} onChange={onChange} className="form-control" id="kunci_jawaban">
+            <option value="A">A</option>
+            <option value="B">B</option>
+            <option value="C">C</option>
+            <option value="D">D</option>
+            <option value="E">E</option>
+        </select>
+    </div> <br/> <br/>
+    </>
+        
+    if(contoh){
+        opsiKunciJawaban = <></>
+    }
+
     return (
         <div>
             <h1>Add {contoh} Soal</h1>
@@ -81,16 +103,7 @@ function AddSoalForm({match}) {
                         <textarea value={pilihanE} onChange={onChange} id="pilihanE" className="form-control" rows="1"></textarea>
                     </div> <br/> <br/>
 
-                    <label htmlFor="kunci_jawaban" className="col-sm-2 col-lg-1 col-form-label">Jawaban</label>
-                    <div className="col-sm-10 col-lg-5">
-                        <select value={kunci_jawaban} onChange={onChange} className="form-control" id="kunci_jawaban">
-                            <option value="A">A</option>
-                            <option value="B">B</option>
-                            <option value="C">C</option>
-                            <option value="D">D</option>
-                            <option value="E">E</option>
-                        </select>
-                    </div> <br/> <br/>
+                    {opsiKunciJawaban}
                 </div>
                 <button className="btn btn-primary float-right">Submit {contoh} Soal</button>
             </form>

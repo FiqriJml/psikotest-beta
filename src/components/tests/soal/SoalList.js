@@ -4,7 +4,6 @@ import { selectPaketById, selectTestById } from '../testsSlice';
 import { useFirestoreConnect, isLoaded, isEmpty } from 'react-redux-firebase';
 import { Link } from 'react-router-dom';
 import SoalViewer from './SoalViewer';
-import Soal from './Soal';
 import ContohSoal from './ContohSoal';
 
 function SoalList({match}) {
