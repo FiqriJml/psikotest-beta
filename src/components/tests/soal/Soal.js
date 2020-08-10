@@ -6,7 +6,7 @@ function Soal({soal, no}) {
         return <p></p>
     }
     return (
-        <div className="row">
+        <div className="row mb-3">
             <div className="col-12">
                {no}) {soal.soal} ?
             </div>

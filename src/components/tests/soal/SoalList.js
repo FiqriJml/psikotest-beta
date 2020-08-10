@@ -35,18 +35,17 @@ function SoalList({match}) {
                     <p>Bentuk: {paket.bentuk_soal}</p>
                     <p>Tipe: {paket.tipe_soal}</p>
                     <p>Waktu: {paket.waktu}</p>
-                <p>
+                
                 <div className="btn-group" role="group">
                     <Link to={`${paketId}/add-soal/contoh`} className="btn btn-sm btn-primary">Buat contoh soal</Link>
                     <Link to={`${paketId}/add-soal`} className="btn btn-sm btn-success">Buat soal</Link>
                 </div>
-                </p>
+                <br/> <br/>
                 <p><b>Contoh Soal:</b></p>
-                <p>
-                    <ContohSoal soal={contohSoal} />
-                </p>
+                <ContohSoal soal={contohSoal} />
+                <br/> 
                 <p><b>List Soal:</b></p>
-                <p><SoalViewer soalList={soalList}/></p>
+                <SoalViewer soalList={soalList}/>
             </div>
             <div className="col-2">
             </div>

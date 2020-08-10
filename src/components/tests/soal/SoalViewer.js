@@ -9,14 +9,12 @@ function SoalViewer({soalList}) {
     return (
         <div style={{
             border: "solid 2px red",
-            padding: "12px"
+            padding: "20px"
         }}>
             {
                 soalList && soalList.map(soal => {
                     return (
-                        <p>
-                            <Soal soal={soal} key={index++} no={index}/>
-                        </p>
+                        <Soal soal={soal} key={index++} no={index}/>
                     )
                 })
             }
