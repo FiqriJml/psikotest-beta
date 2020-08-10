@@ -12,6 +12,7 @@ function AddSoalForm({match}) {
     const [pilihanC, setpilihanC] = useState('')
     const [pilihanD, setpilihanD] = useState('')
     const [pilihanE, setpilihanE] = useState('')
+    const [kunci_jawaban, setkunci_jawaban] = useState('A')
 
     const myFun = []
     myFun['soal'] = setsoal;
@@ -20,6 +21,7 @@ function AddSoalForm({match}) {
     myFun['pilihanC'] = setpilihanC;
     myFun['pilihanD'] = setpilihanD;
     myFun['pilihanE'] = setpilihanE;
+    myFun['kunci_jawaban'] = setkunci_jawaban;
 
     const dispatch = useDispatch()
 
@@ -77,6 +79,17 @@ function AddSoalForm({match}) {
                     <label htmlFor="pilihanE" className="col-sm-2 col-lg-1 col-form-label">Pilihan E</label>
                     <div className="col-sm-10 col-lg-5">
                         <textarea value={pilihanE} onChange={onChange} id="pilihanE" className="form-control" rows="1"></textarea>
+                    </div> <br/> <br/>
+
+                    <label htmlFor="kunci_jawaban" className="col-sm-2 col-lg-1 col-form-label">Jawaban</label>
+                    <div className="col-sm-10 col-lg-5">
+                        <select value={kunci_jawaban} onChange={onChange} className="form-control" id="kunci_jawaban">
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="C">C</option>
+                            <option value="D">D</option>
+                            <option value="E">E</option>
+                        </select>
                     </div> <br/> <br/>
                 </div>
                 <button className="btn btn-primary float-right">Submit {contoh} Soal</button>
