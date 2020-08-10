@@ -3,6 +3,9 @@ import { useSelector } from 'react-redux';
 import { selectPaketById, selectTestById } from '../testsSlice';
 import { useFirestoreConnect, isLoaded, isEmpty } from 'react-redux-firebase';
 import { Link } from 'react-router-dom';
+import SoalViewer from './SoalViewer';
+import Soal from './Soal';
+import ContohSoal from './ContohSoal';
 
 function SoalList({match}) {
     const {testId, paketId} = match.params
@@ -13,27 +16,40 @@ function SoalList({match}) {
     ]);
     const paket = useSelector(state => selectPaketById(state, paketId))
     const test = useSelector(state => selectTestById(state, testId))
-   
+
     if(!isLoaded(paket)){
         return <p>Loading...</p>
     }
     if(isEmpty(paket)){
         return <h1 className="text-center">Page Not Found</h1>
     }
+    const soalList = paket.soalList
+    const contohSoal = paket.contoh
+    console.log(paket)
     return (
-        <div>
-            <h3>{test.name} Sub Paket {paket.no}</h3>
-            <ul>
-                <li>Bentuk: {paket.bentuk_soal}</li>
-                <li>Tipe: {paket.tipe_soal}</li>
-                <li>Waktu: {paket.waktu}</li>
-            </ul>
-            <div className="btn-group" role="group">
-                <Link to={`${paketId}/add-soal/contoh`} className="btn btn-sm btn-primary">Buat contoh soal</Link>
-                <Link to={`${paketId}/add-soal`} className="btn btn-sm btn-success">Buat soal</Link>
+        <div className="row">
+            <div className="col-2">
             </div>
-            <br/>   <br/>
-            <p><b>Contoh Soal:</b></p>
+            <div className="col-8">
+                <h3>{test.name} Sub Paket {paket.no}</h3>
+                    <p>Bentuk: {paket.bentuk_soal}</p>
+                    <p>Tipe: {paket.tipe_soal}</p>
+                    <p>Waktu: {paket.waktu}</p>
+                <p>
+                <div className="btn-group" role="group">
+                    <Link to={`${paketId}/add-soal/contoh`} className="btn btn-sm btn-primary">Buat contoh soal</Link>
+                    <Link to={`${paketId}/add-soal`} className="btn btn-sm btn-success">Buat soal</Link>
+                </div>
+                </p>
+                <p><b>Contoh Soal:</b></p>
+                <p>
+                    <ContohSoal soal={contohSoal} />
+                </p>
+                <p><b>List Soal:</b></p>
+                <p><SoalViewer soalList={soalList}/></p>
+            </div>
+            <div className="col-2">
+            </div>
         </div>
     )
 }

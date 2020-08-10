@@ -1,48 +1,82 @@
 import React from 'react'
+import { useDispatch } from 'react-redux'
+import { addSoal, addContohSoal } from './soalAction'
+import { useState } from 'react'
 
 function AddSoalForm({match}) {
     const {contoh, paketId, testId} = match.params
+    
+    const [soal, setsoal] = useState('')
+    const [pilihanA, setpilihanA] = useState('')
+    const [pilihanB, setpilihanB] = useState('')
+    const [pilihanC, setpilihanC] = useState('')
+    const [pilihanD, setpilihanD] = useState('')
+    const [pilihanE, setpilihanE] = useState('')
+
+    const myFun = []
+    myFun['soal'] = setsoal;
+    myFun['pilihanA'] = setpilihanA;
+    myFun['pilihanB'] = setpilihanB;
+    myFun['pilihanC'] = setpilihanC;
+    myFun['pilihanD'] = setpilihanD;
+    myFun['pilihanE'] = setpilihanE;
+
+    const dispatch = useDispatch()
 
     const onEnter = (e) => {
-        console.log('awl: ',e.target.scrollHeight)
+        // console.log('awl: ',e.target.scrollHeight)
         e.target.style.height = "auto"
-        console.log('end: ',e.target.scrollHeight)
+        // console.log('end: ',e.target.scrollHeight)
         const height = e.target.scrollHeight + 2
         e.target.style.height = height + 'px'
-
+    }
+    
+    const onSubmit = (e) => {
+        e.preventDefault()
+        const newSoal = {soal, pilihanA, pilihanB, pilihanC, pilihanD, pilihanE}
+        if(contoh){
+            dispatch(addContohSoal({paketId, testId, newSoal}))
+        }else{
+            dispatch(addSoal({paketId, testId, newSoal}))
+        }
+    }
+    const onChange = e => {
+        onEnter(e)
+        const el = e.target
+        myFun[el.id](el.value)
     }
     return (
         <div>
             <h1>Add {contoh} Soal</h1>
-            <form>
+            <form onSubmit={onSubmit}>
                 <div className="form-group row">
                 <label htmlFor="soal" className="col-sm-2 col-lg-1 col-form-label">Soal</label>
                     <div className="col-sm-10 col-lg-11">
-                        <textarea onChange={onEnter} id="soal" className="form-control"></textarea>
+                        <textarea value={soal} onChange={onChange} id="soal" className="form-control"></textarea>
                     </div>
                 </div>
                 <div className="form-group row">
-                    <label htmlFor="pilihan_a" className="col-sm-2 col-lg-1 col-form-label">Pilihan A</label>
+                    <label htmlFor="pilihanA" className="col-sm-2 col-lg-1 col-form-label">Pilihan A</label>
                     <div className="col-sm-10 col-lg-5">
-                        <textarea onChange={onEnter} id="pilihan_a" className="form-control" rows="1"></textarea>
+                        <textarea value={pilihanA} onChange={onChange} id="pilihanA" className="form-control" rows="1"></textarea>
                     </div> <br/> <br/>
-                    <label htmlFor="pilihan_b" className="col-sm-2 col-lg-1 col-form-label">Pilihan B</label>
+                    <label htmlFor="pilihanB" className="col-sm-2 col-lg-1 col-form-label">Pilihan B</label>
                     <div className="col-sm-10 col-lg-5">
-                        <textarea onChange={onEnter} id="pilihan_b" className="form-control" rows="1"></textarea>
+                        <textarea value={pilihanB} onChange={onChange} id="pilihanB" className="form-control" rows="1"></textarea>
                     </div> <br/> <br/>
 
-                    <label htmlFor="pilihan_c" className="col-sm-2 col-lg-1 col-form-label">Pilihan C</label>
+                    <label htmlFor="pilihanC" className="col-sm-2 col-lg-1 col-form-label">Pilihan C</label>
                     <div className="col-sm-10 col-lg-5">
-                        <textarea onChange={onEnter} id="pilihan_c" className="form-control" rows="1"></textarea>
+                        <textarea value={pilihanC} onChange={onChange} id="pilihanC" className="form-control" rows="1"></textarea>
                     </div> <br/> <br/>
-                    <label htmlFor="pilihan_d" className="col-sm-2 col-lg-1 col-form-label">Pilihan D</label>
+                    <label htmlFor="pilihanD" className="col-sm-2 col-lg-1 col-form-label">Pilihan D</label>
                     <div className="col-sm-10 col-lg-5">
-                        <textarea onChange={onEnter} id="pilihan_d" className="form-control" rows="1"></textarea>
+                        <textarea value={pilihanD} onChange={onChange} id="pilihanD" className="form-control" rows="1"></textarea>
                     </div> <br/> <br/>
-                    
-                    <label htmlFor="pilihan_e" className="col-sm-2 col-lg-1 col-form-label">Pilihan E</label>
+
+                    <label htmlFor="pilihanE" className="col-sm-2 col-lg-1 col-form-label">Pilihan E</label>
                     <div className="col-sm-10 col-lg-5">
-                        <textarea onChange={onEnter} id="pilihan_e" className="form-control" rows="1"></textarea>
+                        <textarea value={pilihanE} onChange={onChange} id="pilihanE" className="form-control" rows="1"></textarea>
                     </div> <br/> <br/>
                 </div>
                 <button className="btn btn-primary float-right">Submit {contoh} Soal</button>
