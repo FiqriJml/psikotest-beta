@@ -16,6 +16,25 @@ export const updateTest = createAsyncThunk(
   }
 )
 
+export const updateSoal = createAsyncThunk(
+  'tests/soal/updated', async (soal) => {
+    const {testId, paketId, newSoal, index} = soal
+    const dbPaket = dbTests.doc(testId).collection('paket').doc(paketId)
+
+    const soalList = (await dbPaket.get()).data().soalList
+    // default values in JavaScript
+    const nextSoal = soalList
+
+    nextSoal[index] = newSoal
+
+    const response = await dbPaket.update({
+          soalList: nextSoal
+      })
+    return response
+
+  }
+)
+
 export const addContohSoal = createAsyncThunk(
   'tests/soal/added', async (soal) => {
       const {testId, paketId, newSoal} = soal

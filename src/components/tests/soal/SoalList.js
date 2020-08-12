@@ -15,12 +15,15 @@ function SoalList({match}) {
     ]);
     const paket = useSelector(state => selectPaketById(state, paketId))
     const test = useSelector(state => selectTestById(state, testId))
-
+    
     if(!isLoaded(paket)){
         return <p>Loading...</p>
     }
     if(isEmpty(paket)){
         return <h1 className="text-center">Page Not Found</h1>
+    }
+    if(!isLoaded(test)){
+        return <p>Loading...</p>
     }
     const soalList = paket.soalList
     const contohSoal = paket.contoh
@@ -44,7 +47,7 @@ function SoalList({match}) {
                 <ContohSoal soal={contohSoal} />
                 <br/> 
                 <p><b>List Soal:</b></p>
-                <SoalViewer soalList={soalList}/>
+                <SoalViewer soalList={soalList} match={match}/>
             </div>
             <div className="col-2">
             </div>

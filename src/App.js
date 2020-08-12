@@ -10,6 +10,7 @@ import EditTestForm from './components/tests/EditTestForm';
 import AddSubForm from './components/tests/subsoal/AddForm';
 import SoalList from './components/tests/soal/SoalList';
 import AddSoalForm from './components/tests/soal/AddSoalForm';
+import UpdateSoal from './components/tests/soal/UpdateSoal';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route exact path="/tests/:testId" component={SubList} />
           <Route exact path="/tests/:testId/:paketId" component={SoalList} />
           <Route exact path="/tests/:testId/:paketId/add-soal" component={AddSoalForm} />
+          <Route exact path="/tests/:testId/:paketId/update-soal/:index" component={UpdateSoal} />
           <Route exact path="/tests/:testId/:paketId/add-soal/:contoh" component={AddSoalForm} />
           <Route path="/tests/edit/:testId" component={EditTestForm} />
           <Route path="/:testId/paket/add" component={AddSubForm} />

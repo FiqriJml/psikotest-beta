@@ -3,7 +3,7 @@ import Soal from './Soal'
 
 
 
-function SoalViewer({soalList}) {
+function SoalViewer({soalList, match}) {
     console.log(soalList)
     let index = 0
     return (
@@ -11,7 +11,7 @@ function SoalViewer({soalList}) {
             {
                 soalList && soalList.map(soal => {
                     return (
-                        <Soal soal={soal} key={index++} no={index}/>
+                        <Soal soal={soal} key={index++} no={index} match={match}/>
                     )
                 })
             }

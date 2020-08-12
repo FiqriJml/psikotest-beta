@@ -1,8 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-function Soal({soal, no}) {
-    console.log(soal)
+function Soal({soal, no, match}) {
+    const {testId, paketId} = match.params
+    const index = no -1
+    console.log(soal, testId)
     if(!soal){
         return <p></p>
     }
@@ -17,7 +19,7 @@ function Soal({soal, no}) {
     return (
         <div className="soal-item">
             <div className="float-right btn-group">
-                <Link to="#" className="btn btn-secondary btn-sm">update</Link>
+                <Link to={`/tests/${testId}/${paketId}/update-soal/${index}`} className="btn btn-secondary btn-sm">update</Link>
                 <Link to="#" className="btn btn-danger btn-sm">delete</Link>
             </div>
             <div>
