@@ -66,6 +66,23 @@ export const addPaket = createAsyncThunk(
     return response
   }
 )
+export const updatePaket = createAsyncThunk(
+  'tests/paket/updated', async (paket) => {
+    const {testId, paketId, ...newPaket} = paket
+    newPaket.no = parseInt(newPaket.no)
+    console.log('test:',testId)
+    console.log('newPaket:',newPaket)
+    const dbPaket = dbTests.doc(testId).collection('paket')
+
+    const response = await dbPaket.doc(paketId).update(newPaket)
+    .then( () => {
+      console.log("updating doc paket succsess")
+    }).catch(err =>{
+      console.log("Error updating document: ", err)
+    })
+    return response
+  }
+)
 const paketCounter = (test, add) => {
   let jmlPaket = 1
   if(!test.paket){

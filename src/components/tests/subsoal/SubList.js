@@ -61,6 +61,7 @@ export const SingleTest = ({match}) =>{
                 <td width="100px">
                     <div className="btn-group" role="group">
                         <Link to={`${testId}/${paket.id}`} className="btn btn-sm btn-primary">view</Link>
+                        <Link to={`${testId}/paket/update/${paket.id}`} className="btn btn-sm btn-secondary">edit</Link>
                         <button className="btn btn-danger btn-sm" onClick={onDelete} id={paket.id}>del</button>
                     </div>
                 </td>

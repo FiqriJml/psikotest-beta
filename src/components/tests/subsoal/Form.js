@@ -1,20 +1,16 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { addPaket, selectTestById } from '../testsSlice'
-import { useFirestoreConnect } from 'react-redux-firebase'
+import { addPaket, selectTestById, updatePaket } from '../testsSlice'
 import { useHistory } from 'react-router-dom'
 
-export default function AddForm({match}) {
-    const {testId} = match.params
-    useFirestoreConnect(
-        { collection: 'tests' }
-    )
-    const initTipe = "Text"
-    const initBentuk = "Pilihan Ganda"
-    const [no, setNo] = useState('')
-    const [tipe_soal, setTipe_soal] = useState(initTipe)
-    const [bentuk_soal, setBentuk_soal] = useState(initBentuk)
-    const [waktu_pengerjaan, setWaktu_pengerjaan] = useState('')
+export default function AddForm({match, paket}) {
+    const initialPaket = paket
+    const {testId, paketId} = match.params
+    
+    const [no, setNo] = useState(initialPaket.no)
+    const [tipe_soal, setTipe_soal] = useState(initialPaket.tipe_soal)
+    const [bentuk_soal, setBentuk_soal] = useState(initialPaket.bentuk_soal)
+    const [waktu_pengerjaan, setWaktu_pengerjaan] = useState(initialPaket.waktu_pengerjaan || '')
 
     const dispatch = useDispatch()
     const history = useHistory()
@@ -23,7 +19,11 @@ export default function AddForm({match}) {
 
     const onSubmit = (e) => {
         e.preventDefault()
-        dispatch(addPaket({test, no, bentuk_soal, tipe_soal, waktu_pengerjaan}))
+        if(paketId){
+            dispatch(updatePaket({testId, paketId, no, bentuk_soal, tipe_soal, waktu_pengerjaan}))
+        }else{   
+            dispatch(addPaket({test, no, bentuk_soal, tipe_soal, waktu_pengerjaan}))
+        }
         history.push(`/tests/${testId}`)
     }
     const onChange = (e) => {
@@ -58,7 +58,7 @@ export default function AddForm({match}) {
                     <option className="form-control">Isian</option>
                 </select>
                 <label htmlFor="waktu">Waktu Pengerjaan</label>
-                <input value={waktu_pengerjaan} onChange={onChangeWaktu} type="text" className="form-control" id="waktu"
+                <input value={waktu_pengerjaan} onChange={onChangeWaktu} type="number" className="form-control" id="waktu"
                  placeholder="Enter Waktu (satuan menit)"/>
             </div>
             <button className="btn btn-primary">Submit</button>
