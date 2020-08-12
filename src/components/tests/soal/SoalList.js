@@ -27,7 +27,7 @@ function SoalList({match}) {
     }
     const soalList = paket.soalList
     const contohSoal = paket.contoh
-    console.log(paket)
+    
     let buatContohSoal = <Link to={`${paketId}/add-soal/contoh`} className="btn btn-sm btn-primary">Buat contoh soal</Link>
     if(paket.contoh){
         buatContohSoal = <></>

@@ -15,7 +15,24 @@ export const updateTest = createAsyncThunk(
     return response
   }
 )
+export const deleteSoal = createAsyncThunk(
+  'tests/soal/updated', async (soal) => {
+    const {testId, paketId, index} = soal
+    const dbPaket = dbTests.doc(testId).collection('paket').doc(paketId)
 
+    const soalList = (await dbPaket.get()).data().soalList
+    
+    // Remove Items byIndex
+    const removeItem = (items, i) =>
+      items.slice(0, i).concat(items.slice(i+1, items.length))
+
+    const nextSoal = removeItem(soalList, index)
+    const response = await dbPaket.update({
+          soalList: nextSoal
+      })
+    return response
+  }
+)
 export const updateSoal = createAsyncThunk(
   'tests/soal/updated', async (soal) => {
     const {testId, paketId, newSoal, index} = soal

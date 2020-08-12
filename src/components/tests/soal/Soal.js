@@ -1,10 +1,12 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { deleteSoal } from './soalAction'
 
 function Soal({soal, no, match}) {
     const {testId, paketId} = match.params
+    const dispatch = useDispatch()
     const index = no -1
-    console.log(soal, testId)
     if(!soal){
         return <p></p>
     }
@@ -16,11 +18,14 @@ function Soal({soal, no, match}) {
             opsiClass = "opsi-benar"
         }
     }
+    const onClikcedDelete = () => {
+        dispatch(deleteSoal({testId, paketId, index}))
+    }
     return (
         <div className="soal-item">
             <div className="float-right btn-group">
                 <Link to={`/tests/${testId}/${paketId}/update-soal/${index}`} className="btn btn-secondary btn-sm">update</Link>
-                <Link to="#" className="btn btn-danger btn-sm">delete</Link>
+                <button onClick={onClikcedDelete} className="btn btn-danger btn-sm">delete</button>
             </div>
             <div>
                {no}) {soal.soal} ?
