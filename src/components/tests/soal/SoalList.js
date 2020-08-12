@@ -28,6 +28,10 @@ function SoalList({match}) {
     const soalList = paket.soalList
     const contohSoal = paket.contoh
     console.log(paket)
+    let buatContohSoal = <Link to={`${paketId}/add-soal/contoh`} className="btn btn-sm btn-primary">Buat contoh soal</Link>
+    if(paket.contoh){
+        buatContohSoal = <></>
+    }
     return (
         <div className="row">
             <div className="col-2">
@@ -39,12 +43,12 @@ function SoalList({match}) {
                     <p>Waktu: {paket.waktu}</p>
                 
                 <div className="btn-group" role="group">
-                    <Link to={`${paketId}/add-soal/contoh`} className="btn btn-sm btn-primary">Buat contoh soal</Link>
+                    {buatContohSoal}
                     <Link to={`${paketId}/add-soal`} className="btn btn-sm btn-success">Buat soal</Link>
                 </div>
                 <br/> <br/>
                 <p><b>Contoh Soal:</b></p>
-                <ContohSoal soal={contohSoal} />
+                <ContohSoal soal={contohSoal} match={match} />
                 <br/> 
                 <p><b>List Soal:</b></p>
                 <SoalViewer soalList={soalList} match={match}/>

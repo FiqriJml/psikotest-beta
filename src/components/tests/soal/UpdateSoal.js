@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import UpdateSoalForm from './UpdateSoalForm';
 
 function UpdateSoal({match}) {
-    const {contoh, paketId, testId, index} = match.params
+    const {index, paketId, testId} = match.params
     useFirestoreConnect([
         {collection: 'tests', doc: testId, subcollections: [{collection: 'paket', doc: paketId}],  storeAs: "subpaket"},
     ]);
@@ -17,9 +17,12 @@ function UpdateSoal({match}) {
     if(isEmpty(paket)){
         return <h1 className="text-center">Page Not Found</h1>
     }
-    const oldSoal = paket.soalList[index]
-    console.log(oldSoal)
-
+    let oldSoal = paket.contoh
+    let contoh = "contoh"
+    if(index !== contoh){
+        contoh = undefined
+        oldSoal = paket.soalList[index]
+    }
     return(
         <UpdateSoalForm oldSoal={oldSoal} doc={{contoh, paketId, testId, index}} />
     )

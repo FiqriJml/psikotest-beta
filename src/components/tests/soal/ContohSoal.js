@@ -1,14 +1,15 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-function ContohSoal({soal}) {
+function ContohSoal({soal, match}) {
+    const {testId, paketId} = match.params
     if(!soal){
         return <p></p>
     }
     return (
         <div className="soal-box">
             <div className="float-right">
-                <Link to="#" className="btn btn-secondary btn-sm">update</Link>
+                <Link to={`/tests/${testId}/${paketId}/update-soal/contoh`} className="btn btn-secondary btn-sm">update</Link>
             </div>
             <div>
                 {soal.soal} ?
